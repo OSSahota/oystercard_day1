@@ -11,6 +11,10 @@ class Oystercard
     @balance += money
   end
 
+  def deduct(money)
+    @balance -= money
+  end
+
   private
   DEFAULT_CONSTANT = 90
 

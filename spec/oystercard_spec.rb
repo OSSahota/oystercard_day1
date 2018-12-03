@@ -27,4 +27,13 @@ describe Oystercard do
 
   end
 
+  context '#deduct' do
+
+    it "deducts money from your oystercard" do
+      oystercard.top_up(5)
+      expect{oystercard.deduct(5)}.to change{oystercard.balance}.from(5).to(0)
+    end
+
+  end
+
 end
