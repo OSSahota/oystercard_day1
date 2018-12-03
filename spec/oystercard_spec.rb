@@ -41,9 +41,27 @@ describe Oystercard do
       expect(oystercard).to respond_to(:touch_in)
     end
 
-    it "changes the state of the oystercard" do
+    it "changes the state of the oystercard - touch in" do
       oystercard.touch_in
       expect(oystercard.journey_status).to eq true
+    end
+
+  end
+
+  context "#touch_out" do
+
+    it "it changes the state of the oystercard - touch out" do
+      oystercard.touch_out
+      expect(oystercard.journey_status).to eq false
+    end
+
+  end
+
+  context "#in_journey?" do
+
+    it "returns true when in a journey" do
+      oystercard.touch_in
+      expect(oystercard.in_journey?).to eq true
     end
 
   end

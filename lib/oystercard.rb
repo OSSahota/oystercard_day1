@@ -20,6 +20,14 @@ class Oystercard
     @journey_status = true
   end
 
+  def touch_out
+    @journey_status = false
+  end
+
+  def in_journey?
+    @journey_status
+  end
+
   private
   MAX_BALANCE = 90
 
