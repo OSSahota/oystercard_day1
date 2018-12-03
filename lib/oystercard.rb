@@ -1,25 +1,30 @@
 class Oystercard
 
-  attr_reader :balance
+  attr_reader :balance, :journey_status
 
   def initialize
     @balance = 0
+    @journey_status = false
   end
 
   def top_up(money)
-    fail "Max balance allowed is £#{DEFAULT_CONSTANT}" if max?(money)
+    fail "Max balance allowed is £#{MAX_BALANCE}" if max?(money)
     @balance += money
   end
 
-  def deduct(money)
-    @balance -= money
+  def deduct(amount)
+    @balance -= amount
+  end
+
+  def touch_in
+    @journey_status = true
   end
 
   private
-  DEFAULT_CONSTANT = 90
+  MAX_BALANCE = 90
 
   def max?(money)
-    (@balance + money) > DEFAULT_CONSTANT
+    (@balance + money) > MAX_BALANCE
   end
 
 end
