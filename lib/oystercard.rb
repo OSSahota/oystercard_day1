@@ -17,6 +17,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "Balance is too low" if @balance < MINIMUM_FARE
     @journey_status = true
   end
 
@@ -30,6 +31,7 @@ class Oystercard
 
   private
   MAX_BALANCE = 90
+  MINIMUM_FARE = 1
 
   def max?(money)
     (@balance + money) > MAX_BALANCE

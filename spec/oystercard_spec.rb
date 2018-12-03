@@ -42,8 +42,13 @@ describe Oystercard do
     end
 
     it "changes the state of the oystercard - touch in" do
+      oystercard.top_up(Oystercard::MINIMUM_FARE)
       oystercard.touch_in
       expect(oystercard.journey_status).to eq true
+    end
+
+    it "raises an error if balance is less than Minimum fare" do
+      expect{ oystercard.touch_in }.to raise_error "Balance is too low"
     end
 
   end
@@ -60,6 +65,7 @@ describe Oystercard do
   context "#in_journey?" do
 
     it "returns true when in a journey" do
+      oystercard.top_up(Oystercard::MINIMUM_FARE)
       oystercard.touch_in
       expect(oystercard.in_journey?).to eq true
     end
