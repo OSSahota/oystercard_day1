@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
   let(:oystercard) { Oystercard.new }
   let(:station) { double :station }
+  let(:station_out) { double :station_out }
 
   context '#balance' do
 
@@ -76,21 +77,28 @@ describe Oystercard do
       # expect{ oystercard.deduct(Oystercard::MINIMUM_FARE) }.to change{ oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
 
       # Challenge 10 - above test replaced with below afetr moving #deduct into private
-      expect{ oystercard.touch_out }.to change{ oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
+      expect{ oystercard.touch_out(station_out) }.to change{ oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
     end
 
     #Challenge 11
     it "resets entry station variable on touch out" do
       oystercard.top_up(Oystercard::MINIMUM_FARE)
-      oystercard.touch_out
-      expect(oystercard.entry_station).to eq nil
+      oystercard.touch_out(station_out)
+      expect(oystercard.entry_station).to eq([])
+    end
+
+    it "adds journey history on touch out" do
+      oystercard.top_up(Oystercard::MIN_BALANCE)
+      oystercard.touch_in(station)
+      oystercard.touch_out(station_out)
+      expect(oystercard.journey_history).to eq({ station => station_out })
     end
 
   end
 
   # Challenge 11 - commented out
   # context "#in_journey?" do
-  # 
+  #
   #   it "returns true when in a journey" do
   #     oystercard.top_up(Oystercard::MINIMUM_FARE)
   #     oystercard.touch_in(station)
