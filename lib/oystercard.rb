@@ -1,13 +1,9 @@
 class Oystercard
 
-  attr_reader :balance, :entry_station, :journey_history
-  # :journey_status,
+  attr_reader :balance
 
   def initialize
     @balance = 0
-    # @journey_status = false
-    @entry_station = []
-    @journey_history = {}
   end
 
   def top_up(money)
@@ -15,30 +11,8 @@ class Oystercard
     @balance += money
   end
 
-  def touch_in(station)
-    fail "Balance is too low" if @balance < MIN_BALANCE
-    # @journey_status = true
-    @entry_station = station
-  end
-
-  def touch_out(exit_station)
-    deduct(MINIMUM_FARE)
-    # @journey_status = false
-    #@entry_station = nil
-    @journey_history.store(@entry_station, exit_station)
-    @entry_station = [] # ask coach why .pop fails RSpec
-  end
-
-  # Commented out as part of challenge 11
-  # def in_journey?
-  #   @journey_status
-  # end
-
-  def in_journey?
-    @entry_station
-  end
-
   private
+
   MAX_BALANCE = 90
   MINIMUM_FARE = 1
   MIN_BALANCE = 1
@@ -50,5 +24,9 @@ class Oystercard
   def deduct(amount)
     @balance -= amount
   end
+
+  # def min_balance?
+  #   @balance < MIN_BALANCE
+  # end
 
 end
